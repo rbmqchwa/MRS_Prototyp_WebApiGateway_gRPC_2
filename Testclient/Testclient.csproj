@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+    <None Remove="Protos\account.proto" />
+    <None Remove="Protos\asset.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.28.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\account.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\asset.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Files\Client\" />
+    <Folder Include="Files\Uploaded\" />
+  </ItemGroup>
+
+</Project>

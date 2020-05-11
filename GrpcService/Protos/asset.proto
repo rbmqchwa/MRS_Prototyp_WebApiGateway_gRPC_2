@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService";
+
+package asset;
+
+//https://blog.noser.com/grpc-tutorial-teil-2-streaming-mit-grpc/
+
+service Asset {
+	// Sends a greeting
+	rpc UploadFile(stream UploadFileRequest) returns(UploadFileResponse);
+	rpc DownloadFile(DownloadFileRequest) returns(stream DownloadFileResponse);
+}
+
+
+
+message UploadFileRequest {	
+	string username = 1;
+	FileInfo info = 2;
+	TransferStatus transferStatus = 3;
+	bytes chunk_data = 4;
+}
+
+message UploadFileResponse{
+	string id = 1;
+	int32 received = 2;
+	TransferStatus status = 3;
+}
+
+message DownloadFileResponse {
+	oneof data {
+		FileInfo info = 1;
+		bytes chunk_data = 2;
+		TransferStatus status = 3;
+	};
+}
+
+message DownloadFileRequest {	
+	string id = 1;
+	string username = 2;	
+	string filename = 3;
+}
+
+message FileInfo{
+	string id = 1;
+	string name = 2;
+	string fileChecksum = 3;
+}
+
+message DataChunk {
+	bool data = 1;
+}
+
+enum TransferStatus{
+	Undefined = 0;
+	Success = 1;
+	Failure = 2;
+	Invalid  = 3;
+	Cancelled = 4;
+}

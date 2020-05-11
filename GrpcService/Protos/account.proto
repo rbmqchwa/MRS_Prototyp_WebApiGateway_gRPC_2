@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService";
+
+package account;
+
+// The greeting service definition.
+service Account {
+	// Sends a greeting
+	rpc LoginUser (LoginRequest) returns (LoginReply);
+	rpc LogoutUser (LogoutRequest) returns (ReturnReply);
+}
+
+// The request message containing the user's name.
+message LoginRequest {
+	string username = 1;
+	string passwordHash = 2;
+}
+
+message LogoutRequest {
+	string username = 1;
+}
+
+
+message LoginReply {
+	bool success = 1;
+	string message = 2;
+}
+
+
+message ReturnReply {
+	bool success = 1;
+	string message = 2;
+} 
